@@ -242,7 +242,14 @@ a:hover {
 /* Author Block */
 .author-block {
     font-family: 'Times New Roman', serif;
-    font-size: 20px;
+    font-size: 18px;
+}
+.author-affiliation {
+    font-size: calc(1em - 2pt);
+}
+.author-email {
+    font-family: "Courier New", monospace;
+    font-size: calc(1em - 2pt);
 }
 
 /* TL;DR Section */
@@ -287,6 +294,18 @@ a:hover {
 }
 
 .task-label { font-weight: 700; }
+
+#failures .task-callout {
+  background: #c62828;
+  border: 1px solid #c62828;
+  border-left: 6px solid #8e0000;
+  color: #fff;
+}
+
+#failures .task-callout .task-badge {
+  background: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+}
 
 /* Responsive Design */
 
@@ -343,7 +362,7 @@ a:hover {
     }
 
     .author-block {
-        font-size: 18px;
+        font-size: 16px;
     }
     
     .tldr-section {
@@ -410,4 +429,75 @@ a:hover {
     .tldr-section {
         font-size: 14px;
     }
+}
+
+.paper-btn--filled {
+  background: #f3f6fb;
+  border: 1px solid #e1e8f5;
+  border-radius: 6px;
+}
+.paper-btn--filled:hover {
+  background: #eef3fb;
+}
+
+.paper-btn--icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.paper-btn--icon img {
+  height: 18px;
+  width: auto;
+  vertical-align: -3px;
+}
+.paper-btn--icon .fa-brands {
+  font-size: 18px;
+  vertical-align: -2px;
+}
+
+/* Reference button styles */
+.link-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 8px 0 6px;
+}
+
+.link-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none !important;
+    color: #fff !important;
+    background-color: #333 !important;
+    border-radius: 20px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.link-btn:hover {
+    background-color: #555 !important;
+    transform: scale(1.05);
+    color: #fff !important;
+}
+
+.link-btn i {
+    font-size: 18px;
+}
+
+.link-logo {
+    height: 20px;
+    width: auto;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 6px;
+}
+
+.link-btn.disabled {
+  background-color: #aaa !important;
+  cursor: not-allowed;
+  pointer-events: none;
 }
