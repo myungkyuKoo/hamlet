@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>HAMLET: Switch your Vision-Language-Action Model into a History-Aware Policy</title>
   <meta property="og:title" content="HAMLET: Switch your Vision-Language-Action Model into a History-Aware Policy" />
-  <meta property="og:description" content="HAMLET enables pre-trained VLAs to leverage historical information efficiently via moment tokens and a memory module." />
+  <meta property="og:description"
+    content="HAMLET enables pre-trained VLAs to leverage historical information efficiently via moment tokens and a memory module." />
   <meta property="og:image" content="resources/1_teaser.png" />
 
   <!-- Fonts and Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,600,400italic,600italic,300,300italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,600,400italic,600italic,300,300italic'
+    rel='stylesheet' type='text/css'>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 
   <!-- Font Awesome for brand icons -->
@@ -26,6 +29,7 @@
       flex-wrap: wrap;
       margin: 16px 0;
     }
+
     .link-btn {
       display: inline-flex;
       align-items: center;
@@ -38,19 +42,22 @@
       font-weight: 600;
       font-size: 18px;
       text-decoration: none;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
       transition: box-shadow 0.2s ease, transform 0.15s ease;
     }
+
     .link-btn:hover,
     .link-btn:focus-visible {
-      box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
       transform: translateY(-1px);
     }
+
     .link-logo {
       height: 22px;
       width: auto;
       display: block;
     }
+
     .link-btn .fa-brands {
       font-size: 22px;
     }
@@ -61,21 +68,75 @@
 
   <!-- Local overrides -->
   <style>
-    .video-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; align-items: start; }
-    .video-item video { width: 100%; height: auto; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); background: #000; }
-    .video-caption { text-align: center; margin-top: 6px; font-size: 0.95rem; color: #555; }
-    @media (max-width: 1024px) { .video-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 600px)  { .video-grid { grid-template-columns: 1fr; } }
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      align-items: start;
+    }
+
+    .video-item video {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      background: #000;
+    }
+
+    .video-caption {
+      text-align: center;
+      margin-top: 6px;
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    @media (max-width: 1024px) {
+      .video-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .video-grid {
+        grid-template-columns: 1fr;
+      }
+    }
 
     /* Requested size and styling changes */
-    .header-text { font-size: calc(2rem * 1.2); }
-    .author-block { font-size: 24px; }
-    .author-block sup { font-size: 0.8em; }
-    .author-email { font-family: "Courier New", monospace; }
-    .author-notes { margin-top: 6px; font-size: 0.9em; color: #444; }
-    .tldr-section { font-size: calc(16px * 1.5); }
-    .text-container p, .instruction { font-size: 1.5rem; }
-    .video-caption { font-size: 1.6rem; }
+    .header-text {
+      font-size: calc(2rem * 1.2);
+    }
+
+    .author-block {
+      font-size: 24px;
+    }
+
+    .author-block sup {
+      font-size: 0.8em;
+    }
+
+    .author-email {
+      font-family: "Courier New", monospace;
+    }
+
+    .author-notes {
+      margin-top: 6px;
+      font-size: 0.9em;
+      color: #444;
+    }
+
+    .tldr-section {
+      font-size: calc(16px * 1.5);
+    }
+
+    .text-container p,
+    .instruction {
+      font-size: 1.5rem;
+    }
+
+    .video-caption {
+      font-size: 1.6rem;
+    }
 
     /* Instruction callout (bold, yellow) */
     .instruction {
@@ -92,6 +153,7 @@
       font-weight: 700;
       line-height: 1.55;
     }
+
     .instruction .instruction-label {
       font-weight: 800;
       padding: 2px 8px;
@@ -110,20 +172,24 @@
       margin-top: 24px;
       margin-bottom: 12px;
       padding: 10px 14px;
-      background: #2e7d32;         /* dark green */
+      background: #2e7d32;
+      /* dark green */
       border: 1px solid #2e7d32;
       border-left: 6px solid #1b5e20;
       border-radius: 10px;
       color: #fff;
       font-weight: 800;
-      font-size: 30px;              /* you can tweak to 28–32px */
+      font-size: 30px;
+      /* you can tweak to 28–32px */
       line-height: 1.25;
     }
+
     .task-callout .task-badge {
       font-weight: 900;
       padding: 2px 10px;
       border-radius: 6px;
-      background: rgba(255,255,255,0.18); /* subtle contrast pill */
+      background: rgba(255, 255, 255, 0.18);
+      /* subtle contrast pill */
       color: #ffffff;
       letter-spacing: 0.3px;
     }
@@ -136,6 +202,10 @@
     <span class="header-text">
       HAMLET: Switch your Vision-Language-Action Model into a History-Aware Policy
     </span>
+  </center>
+
+  <center>
+    <h3 style="margin-top: 10px; font-weight: 500; font-size: 1.8rem;">ICLR 2026</h3>
   </center>
 
   <br />
@@ -172,17 +242,18 @@
         <img src="resources/arxiv_logo.png" alt="arXiv logo" class="link-logo">
         arXiv
       </a>
-      <a class="link-btn disabled">
+      <!-- <a class="link-btn disabled">
         <i class="fa-brands fa-github"></i>
         Code (soon)
-      </a>
+      </a> -->
     </div>
   </center>
 
   <center>
     <br />
     <h2 class="tldr-section">
-      <b>TL;DR:</b>&nbsp; HAMLET is a scalable framework that enables pre-trained VLAs to leverage historical information without costly retraining from scratch.
+      <b>TL;DR:</b>&nbsp; HAMLET is a scalable framework that enables pre-trained VLAs to leverage historical
+      information without costly retraining from scratch.
     </h2>
     <br />
     <div class="image-container">
@@ -197,7 +268,13 @@
     </center>
     <div class="text-container">
       <p>
-        We introduce <span class="task-label">HAMLET</span>, a history-aware fine-tuning framework for Vision-Language-Action (VLA) models that augments pre-trained policies with temporal memory while preserving their existing competencies. HAMLET summarizes instantaneous vision-language representations at each timestep into <span class="task-label"><i>moment tokens</i></span> and consolidates them through a lightweight <span class="task-label"><i>memory module</i></span> to form a temporally informed condition for action prediction. This design delivers strong gains on long-horizon, history-dependent manipulation tasks without retraining from scratch.
+        We introduce <span class="task-label">HAMLET</span>, a history-aware fine-tuning framework for
+        Vision-Language-Action (VLA) models that augments pre-trained policies with temporal memory while preserving
+        their existing competencies. HAMLET summarizes instantaneous vision-language representations at each timestep
+        into <span class="task-label"><i>moment tokens</i></span> and consolidates them through a lightweight <span
+          class="task-label"><i>memory module</i></span> to form a temporally informed condition for action prediction.
+        This design delivers strong gains on long-horizon, history-dependent manipulation tasks without retraining from
+        scratch.
       </p>
     </div>
   </div>
@@ -210,9 +287,15 @@
 
     <div class="text-container">
       <p>
-        <span class="task-label">HAMLET</span> is a fine-tuning framework for VLAs that introduces <b><span class="task-label">H</span>istory-<span class="task-label">A</span>ware <span class="task-label">M</span>emory with <span class="task-label">LE</span>arned <span class="task-label">T</span>okens</b>. 
+        <span class="task-label">HAMLET</span> is a fine-tuning framework for VLAs that introduces <b><span
+            class="task-label">H</span>istory-<span class="task-label">A</span>ware <span
+            class="task-label">M</span>emory with <span class="task-label">LE</span>arned <span
+            class="task-label">T</span>okens</b>.
         <br>
-        The framework has two components: (a) <span class="task-label"><i>moment tokens</i></span>, which summarize instantaneous VLM representations at each timestep, and (b) a <span class="task-label"><i>memory module</i></span> that aggregates moment tokens across timesteps to provide a temporally informed context for action prediction.
+        The framework has two components: (a) <span class="task-label"><i>moment tokens</i></span>, which summarize
+        instantaneous VLM representations at each timestep, and (b) a <span class="task-label"><i>memory
+            module</i></span> that aggregates moment tokens across timesteps to provide a temporally informed context
+        for action prediction.
       </p>
     </div>
 
@@ -222,8 +305,10 @@
 
     <div class="text-container">
       <p>
-        The moment tokens are appended to the VLM input at each timestep and initialized with time-contrastive learning, which encourages distinctiveness across timesteps.
-        Building on this, we incorporate a lightweight memory module that stores and integrates moment token representations across timesteps.
+        The moment tokens are appended to the VLM input at each timestep and initialized with time-contrastive learning,
+        which encourages distinctiveness across timesteps.
+        Building on this, we incorporate a lightweight memory module that stores and integrates moment token
+        representations across timesteps.
       </p>
     </div>
   </div>
@@ -248,15 +333,18 @@
       <h3>[Cube on the left]</h3>
       <div class="video-grid" aria-label="Task 1-a">
         <div class="video-item">
-          <video src="videos/1a_demo_2.mp4" playsinline muted loop controls preload="metadata" poster="thumbnails/1a_demo_2.jpg"></video>
+          <video src="videos/1a_demo_2.mp4" playsinline muted loop controls preload="metadata"
+            poster="thumbnails/1a_demo_2.jpg"></video>
           <div class="video-caption">GR00T N1.5 (Failure #1)</div>
         </div>
         <div class="video-item">
-          <video src="videos/1a_demo_3.mp4" playsinline muted loop controls preload="metadata" poster="thumbnails/1a_demo_3.jpg"></video>
+          <video src="videos/1a_demo_3.mp4" playsinline muted loop controls preload="metadata"
+            poster="thumbnails/1a_demo_3.jpg"></video>
           <div class="video-caption">GR00T N1.5 (Failure #2)</div>
         </div>
         <div class="video-item">
-          <video src="videos/1a_demo_1.mp4" playsinline muted loop controls preload="metadata" poster="thumbnails/1a_demo_1.jpg"></video>
+          <video src="videos/1a_demo_1.mp4" playsinline muted loop controls preload="metadata"
+            poster="thumbnails/1a_demo_1.jpg"></video>
           <div class="video-caption">GR00T N1.5 + HAMLET (Success)</div>
         </div>
       </div>
@@ -264,15 +352,18 @@
       <h3>[Cube on the right]</h3>
       <div class="video-grid" aria-label="Task 1-b">
         <div class="video-item">
-          <video src="videos/1b_demo_2.mp4" playsinline muted loop controls preload="metadata" poster="thumbnails/1b_demo_2.jpg"></video>
+          <video src="videos/1b_demo_2.mp4" playsinline muted loop controls preload="metadata"
+            poster="thumbnails/1b_demo_2.jpg"></video>
           <div class="video-caption">GR00T N1.5 (Failure #1)</div>
         </div>
         <div class="video-item">
-          <video src="videos/1b_demo_3.mp4" playsinline muted loop controls preload="metadata" poster="thumbnails/1b_demo_3.jpg"></video>
+          <video src="videos/1b_demo_3.mp4" playsinline muted loop controls preload="metadata"
+            poster="thumbnails/1b_demo_3.jpg"></video>
           <div class="video-caption">GR00T N1.5 (Failure #2)</div>
         </div>
         <div class="video-item">
-          <video src="videos/1b_demo_1.mp4" playsinline muted loop controls preload="metadata" poster="thumbnails/1b_demo_1.jpg"></video>
+          <video src="videos/1b_demo_1.mp4" playsinline muted loop controls preload="metadata"
+            poster="thumbnails/1b_demo_1.jpg"></video>
           <div class="video-caption">GR00T N1.5 + HAMLET (Success)</div>
         </div>
       </div>
@@ -290,15 +381,18 @@
       <h3>[Cube near the left cup]</h3>
       <div class="video-grid" aria-label="Task 2-a">
         <div class="video-item">
-          <video src="videos/2a_demo_2.mp4" playsinline muted loop controls preload="metadata" poster="thumbnails/2a_demo_2.jpg"></video>
+          <video src="videos/2a_demo_2.mp4" playsinline muted loop controls preload="metadata"
+            poster="thumbnails/2a_demo_2.jpg"></video>
           <div class="video-caption">GR00T N1.5 (Failure #1)</div>
         </div>
         <div class="video-item">
-          <video src="videos/2a_demo_3.mp4" playsinline muted loop controls preload="metadata" poster="thumbnails/2a_demo_3.jpg"></video>
+          <video src="videos/2a_demo_3.mp4" playsinline muted loop controls preload="metadata"
+            poster="thumbnails/2a_demo_3.jpg"></video>
           <div class="video-caption">GR00T N1.5 (Failure #2)</div>
         </div>
         <div class="video-item">
-          <video src="videos/2a_demo_1.mp4" playsinline muted loop controls preload="metadata" poster="thumbnails/2a_demo_1.jpg"></video>
+          <video src="videos/2a_demo_1.mp4" playsinline muted loop controls preload="metadata"
+            poster="thumbnails/2a_demo_1.jpg"></video>
           <div class="video-caption">GR00T N1.5 + HAMLET (Success)</div>
         </div>
       </div>
@@ -306,15 +400,18 @@
       <h3>[Cube near the right cup]</h3>
       <div class="video-grid" aria-label="Task 2-b">
         <div class="video-item">
-          <video src="videos/2b_demo_2.mp4" playsinline muted loop controls preload="metadata" poster="thumbnails/2b_demo_2.jpg"></video>
+          <video src="videos/2b_demo_2.mp4" playsinline muted loop controls preload="metadata"
+            poster="thumbnails/2b_demo_2.jpg"></video>
           <div class="video-caption">GR00T N1.5 (Failure #1)</div>
         </div>
         <div class="video-item">
-          <video src="videos/2b_demo_3.mp4" playsinline muted loop controls preload="metadata" poster="thumbnails/2b_demo_3.jpg"></video>
+          <video src="videos/2b_demo_3.mp4" playsinline muted loop controls preload="metadata"
+            poster="thumbnails/2b_demo_3.jpg"></video>
           <div class="video-caption">GR00T N1.5 (Failure #2)</div>
         </div>
         <div class="video-item">
-          <video src="videos/2b_demo_1.mp4" playsinline muted loop controls preload="metadata" poster="thumbnails/2b_demo_1.jpg"></video>
+          <video src="videos/2b_demo_1.mp4" playsinline muted loop controls preload="metadata"
+            poster="thumbnails/2b_demo_1.jpg"></video>
           <div class="video-caption">GR00T N1.5 + HAMLET (Success)</div>
         </div>
       </div>
@@ -332,15 +429,18 @@
       <h3>[Blue cube on the left]</h3>
       <div class="video-grid" aria-label="Task 3-a">
         <div class="video-item">
-          <video src="videos/3a_demo_2.mp4" playsinline muted loop controls preload="metadata" poster="thumbnails/3a_demo_2.jpg"></video>
+          <video src="videos/3a_demo_2.mp4" playsinline muted loop controls preload="metadata"
+            poster="thumbnails/3a_demo_2.jpg"></video>
           <div class="video-caption">GR00T N1.5 (Failure #1)</div>
         </div>
         <div class="video-item">
-          <video src="videos/3a_demo_3.mp4" playsinline muted loop controls preload="metadata" poster="thumbnails/3a_demo_3.jpg"></video>
+          <video src="videos/3a_demo_3.mp4" playsinline muted loop controls preload="metadata"
+            poster="thumbnails/3a_demo_3.jpg"></video>
           <div class="video-caption">GR00T N1.5 (Failure #2)</div>
         </div>
         <div class="video-item">
-          <video src="videos/3a_demo_1.mp4" playsinline muted loop controls preload="metadata" poster="thumbnails/3a_demo_1.jpg"></video>
+          <video src="videos/3a_demo_1.mp4" playsinline muted loop controls preload="metadata"
+            poster="thumbnails/3a_demo_1.jpg"></video>
           <div class="video-caption">GR00T N1.5 + HAMLET (Success)</div>
         </div>
       </div>
@@ -348,15 +448,18 @@
       <h3>[Blue cube on the right]</h3>
       <div class="video-grid" aria-label="Task 3-b">
         <div class="video-item">
-          <video src="videos/3b_demo_2.mp4" playsinline muted loop controls preload="metadata" poster="thumbnails/3b_demo_2.jpg"></video>
+          <video src="videos/3b_demo_2.mp4" playsinline muted loop controls preload="metadata"
+            poster="thumbnails/3b_demo_2.jpg"></video>
           <div class="video-caption">GR00T N1.5 (Failure #1)</div>
         </div>
         <div class="video-item">
-          <video src="videos/3b_demo_3.mp4" playsinline muted loop controls preload="metadata" poster="thumbnails/3b_demo_3.jpg"></video>
+          <video src="videos/3b_demo_3.mp4" playsinline muted loop controls preload="metadata"
+            poster="thumbnails/3b_demo_3.jpg"></video>
           <div class="video-caption">GR00T N1.5 (Failure #2)</div>
         </div>
         <div class="video-item">
-          <video src="videos/3b_demo_1.mp4" playsinline muted loop controls preload="metadata" poster="thumbnails/3b_demo_1.jpg"></video>
+          <video src="videos/3b_demo_1.mp4" playsinline muted loop controls preload="metadata"
+            poster="thumbnails/3b_demo_1.jpg"></video>
           <div class="video-caption">GR00T N1.5 + HAMLET (Success)</div>
         </div>
       </div>
@@ -368,21 +471,18 @@
 
       <div class="video-grid" aria-label="Failures by task">
         <div class="video-item">
-          <video src="videos/multi_failure1.mp4"
-                playsinline muted loop controls preload="metadata"
-                poster="thumbnails/multi_failure1.jpg"></video>
+          <video src="videos/multi_failure1.mp4" playsinline muted loop controls preload="metadata"
+            poster="thumbnails/multi_failure1.jpg"></video>
           <div class="video-caption">Task #1: Pick-and-Place Twice</div>
         </div>
         <div class="video-item">
-          <video src="videos/multi_failure2.mp4"
-                playsinline muted loop controls preload="metadata"
-                poster="thumbnails/multi_failure2.jpg"></video>
+          <video src="videos/multi_failure2.mp4" playsinline muted loop controls preload="metadata"
+            poster="thumbnails/multi_failure2.jpg"></video>
           <div class="video-caption">Task #2: Cover-and-Stack</div>
         </div>
         <div class="video-item">
-          <video src="videos/multi_failure3.mp4"
-                playsinline muted loop controls preload="metadata"
-                poster="thumbnails/multi_failure3.jpg"></video>
+          <video src="videos/multi_failure3.mp4" playsinline muted loop controls preload="metadata"
+            poster="thumbnails/multi_failure3.jpg"></video>
           <div class="video-caption">Task #3: Swap Cubes</div>
         </div>
       </div>
@@ -392,4 +492,5 @@
 
   <br /><br /><br /><br />
 </body>
+
 </html>
