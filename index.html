@@ -193,6 +193,72 @@
       color: #ffffff;
       letter-spacing: 0.3px;
     }
+
+    /* Section heading: drop the full blue bar in favor of a clean title
+       with a short accent underline. */
+    .navbar-heading {
+      background: transparent !important;
+      background-color: transparent !important;
+      position: relative;
+      padding: 8px 10px 22px;
+    }
+
+    .navbar-heading::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 6px;
+      transform: translateX(-50%);
+      width: 64px;
+      height: 4px;
+      border-radius: 2px;
+      background: #3b6fb3;
+    }
+
+    /* TL;DR soft card */
+    .tldr-card {
+      display: inline-block;
+      max-width: 1200px;
+      margin: 8px auto 16px;
+      padding: 16px 22px;
+      background: #f4f7fc;
+      border: 1px solid #dbe6f4;
+      border-left: 6px solid #3b6fb3;
+      border-radius: 12px;
+      text-align: left;
+    }
+
+    .tldr-card .tldr-section {
+      margin: 0;
+      color: #1a2b45;
+    }
+
+    .tldr-label {
+      display: inline-block;
+      background: #3b6fb3;
+      color: #fff;
+      font-weight: 800;
+      padding: 2px 10px;
+      border-radius: 6px;
+      margin-right: 8px;
+      letter-spacing: 0.4px;
+    }
+
+    /* BibTeX block */
+    .bibtex-block {
+      background: #f4f6fa;
+      color: #1a1a1a;
+      border: 1px solid #e0e6f0;
+      border-radius: 12px;
+      padding: 18px 22px;
+      margin: 12px 1rem 4px;
+      overflow-x: auto;
+      font-family: "Courier New", monospace;
+      font-size: 1.05rem;
+      line-height: 1.55;
+      white-space: pre;
+      text-align: left;
+    }
   </style>
 </head>
 
@@ -242,19 +308,25 @@
         <img src="resources/arxiv_logo.png" alt="arXiv logo" class="link-logo">
         arXiv
       </a>
-      <a class="link-btn disabled">
+      <a href="https://github.com/myungkyuKoo/HAMLET-Isaac-GR00T-N1d5" target="_blank" class="link-btn" rel="noopener">
         <i class="fa-brands fa-github"></i>
-        Code (soon)
+        Code (GR00T N1.5 + HAMLET)
+      </a>
+      <a href="https://github.com/myungkyuKoo/HAMLET-Isaac-GR00T-N1d6" target="_blank" class="link-btn" rel="noopener">
+        <i class="fa-brands fa-github"></i>
+        Code (GR00T N1.6 + HAMLET)
       </a>
     </div>
   </center>
 
   <center>
     <br />
-    <h2 class="tldr-section">
-      <b>TL;DR:</b>&nbsp; HAMLET is a scalable framework that enables pre-trained VLAs to leverage historical
-      information without costly retraining from scratch.
-    </h2>
+    <div class="tldr-card">
+      <h2 class="tldr-section">
+        <span class="tldr-label">TL;DR</span>HAMLET is a scalable framework that enables pre-trained VLAs to leverage
+        historical information without costly retraining from scratch.
+      </h2>
+    </div>
     <br />
     <div class="image-container">
       <img id="teaser-image" src="resources/1_teaser.png" alt="Project Teaser" />
@@ -488,6 +560,20 @@
       </div>
     </div>
 
+  </div>
+
+  <!-- BibTeX -->
+  <div class="docs-section" id="bibtex">
+    <center>
+      <h1 class="navbar-heading"><b>BibTeX</b></h1>
+    </center>
+    <pre class="bibtex-block"><code>@inproceedings{koo2026hamlet,
+  title={{HAMLET}: Switch Your Vision-Language-Action Model into a History-Aware Policy},
+  author={Myungkyu Koo and Daewon Choi and Taeyoung Kim and Kyungmin Lee and Changyeon Kim and Younggyo Seo and Jinwoo Shin},
+  booktitle={The Fourteenth International Conference on Learning Representations},
+  year={2026},
+  url={https://openreview.net/forum?id=KcJ9U0x6kO}
+}</code></pre>
   </div>
 
   <br /><br /><br /><br />
